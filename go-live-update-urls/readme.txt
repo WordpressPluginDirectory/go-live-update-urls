@@ -3,26 +3,29 @@ Contributors: Mat Lipe, onpointplugins
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40onpointplugins%2ecom&lc=US&item_name=Go%20Live%20Update%20Urls&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: search and replace, database, urls, domain, update urls
 Requires at least: 6.2.0
-Tested up to: 6.6.0
+Tested up to: 6.7.1
 Requires PHP: 7.4.0
-Stable tag: 6.8.0
+Stable tag: 7.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Change the domain on your site with one click.
 
 == Description ==
 
-<h3>Change the domain on your site with one click.</h3>
+### Change the domain on your site with one click.
 
 Goes through entire site and replaces all instances of an old URL with a new one. Used most often when changing the domain of your site.
 
-<h3>Features</h3>
+### Features
+
 * Database table by table selection.
-* Updates serialized data in core tables.
+* Updates serialized data.
+* Updates encoded URL.
 * Easy to use admin page - which may be found under Tools.
 * Works on both multisite and single site installs.
 
-<h3>Updates Entire Site including</h3>
+### Updates Entire Site including
+
 * Posts
 * Pages
 * Image URLs
@@ -32,6 +35,53 @@ Goes through entire site and replaces all instances of an old URL with a new one
 * Widgets and widget data
 * Options and settings
 * And much more
+
+### What is Go Live Update Urls?
+
+At a basic level, Go Live Update Urls is a search and replace tool for a WordPress database. The plugin goes through every table in the database and replaces whatever is entered in the "Old URL" field with whatever is entered in the "New URL" field.
+
+The plugin will update anything in the database such as:
+
+* Domains
+* Email addresses
+* Gutenberg blocks
+* Links
+* Shortcodes
+* Text
+* Usernames
+* Widgets
+* Really anything which can be entered in a text field.
+
+
+### What Makes Go Live Update Urls Special?
+
+#### Domain Considerations
+
+Updating a domain or URL in a database is not always as simple as just matching one text and changing it to another. Domains may include things like subdomains or email addresses which end up duplicated or broken when doing a simple replace.
+
+The Go Live Update Urls plugin automatically detects and handles special domain circumstances to give you an accurate update every time without side effects.
+
+#### WordPress Data Types
+
+WordPress stores various data types in the database, some of which do not support straightforward replacement methods. An example of this is serialized data.
+
+The Go Live Update URLs plugin has built-in support for WordPress data types, which automatically:
+
+1. Parses the data into a replaceable format.
+2. Updates the data.
+3. Reverts the data to its original format and saves the updated version.
+
+#### Gracefully Handle Serialized Data
+
+WordPress stores arrays and objects in the database as serialized data. Serialized data cannot be updated using a simple search and replace method because serialized data contains a length value which would be incorrect after a simple replace.
+
+Go Live Update Urls gracefully and accurately replaces serialized data in any WordPress Core database table. The [PRO version](https://onpointplugins.com/product/go-live-update-urls-pro/) replaces serialized data in any table.
+
+Another consideration with serialized data is invalid data left behind from plugins which are no longer in use. Go Live Update Urls is the only tool capable of detecting and managing updates to invalid serialized data without failing or breaking your site.
+
+#### Performance
+
+A feature unique to Go Live Update URLs is that the plugin identifies database rows and columns containing complex data types and updates only the necessary items. This targeted approach significantly improves performance and minimizes the load on the database server during updates.
 
 <h3>Domain Update Process</h3>
 Full step-by-step instructions for a changing a site's domain <a target="_blank" href="https://onpointplugins.com/how-to-change-your-domain-name-on-wordpress/">may be found here</a>.
@@ -54,9 +104,10 @@ Send pull requests via the <a href="https://github.com/lipemat/go-live-update-ur
 <h3>Go PRO</h3>
 Our [PRO version](https://onpointplugins.com/product/go-live-update-urls-pro/?utm_source=readme&utm_campaign=gopro&utm_medium=dot-org) brings additional functionality to this plugin. Check out [the demo](https://onpointplugins.com/go-live-update-urls/go-live-update-urls-pro-demo/?utm_source=demo&utm_campaign=gopro&utm_medium=dot-org) to see if the PRO version is useful for you.
 
-* Updates database tables created by plugins without fear of breaking.
+* Updates database tables created by plugins.
 * Database tables are organized into simple intuitive sections.
-* Ability to choose between a full table or sections.
+* Ability to choose between tables or sections.
+* Ability to convert relative URL into absolute URL.
 * Updates serialized data across any table.
 * Updates encoded URL across any table.
 * Updates JSON data across any table.
@@ -64,11 +115,12 @@ Our [PRO version](https://onpointplugins.com/product/go-live-update-urls-pro/?ut
 * URL testing report is provided for peace of mind.
 * Option to fix common mistakes automatically when entering a URL.
 * View and use history of your site's address.
-* Predictive URLs automatically fill in the "Old URL" and "New URL.".
-* Real time reporting of count and location of urls which will be updated. **NEW**
-* Report of count and location of urls which were updated. **NEW**
-* WP-CLI support for updating URLs from the command line.
-* Priority Support with access to members only support area.
+* Accessible update history including count and location of updated URL. **New**
+* Predictive URL automatically fill in the "Old URL" and "New URL."
+* Real time reporting of count and location of URL which will be updated.
+* Report of count and location of URL which were updated.
+* WP-CLI support for updating URL from the command line.
+* Priority support with access to members only support area.
 
 == Installation ==
 
@@ -112,6 +164,20 @@ If you find you are running into issues with custom tables, you may want to chec
 3. Update prevented due to incomplete data entered.
 
 == Changelog ==
+
+= 7.0.1 =
+* Improved readme.
+* Tested to WordPress 6.7.1.
+
+= 7.0.0 =
+* Introduced class constants for admin capability and parent menu.
+* Introduced `Admin::get_admin_capability` method.
+* Introduced `go-live-update-urls/admin/admin-capability` filter.
+* Removed deprecated `Core::sanitize_field` method.
+* Converted GitHub Actions and Git hooks to distributed versions.
+* Tested to WordPress 6.6.2.
+* Required PRO version 7.0.0+.
+
 = 6.8.0 =
 * Added support for PHP based translations.
 * Bumped required WordPress version to 6.2.0.
